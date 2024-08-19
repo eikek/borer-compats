@@ -1,0 +1,5 @@
+package com.github.eikek.borer.compats.http4s
+
+trait BorerEntityJsonCodec extends BorerEntityJsonEncoder with BorerEntityJsonDecoder
+
+object BorerEntityJsonCodec extends BorerEntityJsonCodec
