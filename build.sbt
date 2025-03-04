@@ -77,7 +77,9 @@ val buildInfoSettings = Seq(
   buildInfoPackage := "com.github.eikek.borer.compats"
 )
 
-val fs2 = project
+val fs2 = crossProject(JSPlatform, JVMPlatform)
+  .crossType(CrossType.Pure)
+  .withoutSuffixFor(JVMPlatform)
   .in(file("modules/borer-fs2"))
   .settings(sharedSettings)
   .settings(testSettings)
@@ -90,7 +92,9 @@ val fs2 = project
       .map(_ % Test)
   )
 
-val http4s = project
+val http4s = crossProject(JSPlatform, JVMPlatform)
+  .crossType(CrossType.Pure)
+  .withoutSuffixFor(JVMPlatform)
   .in(file("modules/borer-http4s"))
   .settings(sharedSettings)
   .settings(testSettings)
@@ -121,7 +125,7 @@ lazy val readme = project
       ()
     }
   )
-  .dependsOn(http4s, fs2)
+  .dependsOn(http4s.jvm, fs2.jvm)
 
 val root = project
   .in(file("."))
@@ -130,4 +134,4 @@ val root = project
   .settings(
     name := "root"
   )
-  .aggregate(fs2, http4s)
+  .aggregate(fs2.jvm, fs2.js, http4s.jvm, http4s.js)
