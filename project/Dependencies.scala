@@ -1,4 +1,5 @@
 import sbt._
+import org.portablescala.sbtplatformdeps.PlatformDepsPlugin.autoImport._
 
 object Dependencies {
   object V {
@@ -11,16 +12,18 @@ object Dependencies {
     val scribe = "3.15.0"
   }
 
-  val fs2 = Seq(
-    "co.fs2" %% "fs2-core" % V.fs2
+  val fs2 = Def.setting(
+    Seq(
+      "co.fs2" %%% "fs2-core" % V.fs2
+    )
   )
 
-  val fs2Io = Seq(
-    "co.fs2" %% "fs2-io" % V.fs2
-  )
+  val fs2Io = Seq("co.fs2" %% "fs2-io" % V.fs2)
 
-  val borer = Seq(
-    "io.bullet" %% "borer-core" % V.borer
+  val borer = Def.setting(
+    Seq(
+      "io.bullet" %%% "borer-core" % V.borer
+    )
   )
 
   val borerDerive = Seq(
@@ -36,8 +39,10 @@ object Dependencies {
     "com.outr" %% "scribe-cats" % V.scribe
   )
 
-  val http4s = Seq(
-    "org.http4s" %% "http4s-core" % V.http4s
+  val http4s = Def.setting(
+    Seq(
+      "org.http4s" %%% "http4s-core" % V.http4s
+    )
   )
 
   val http4sEmber = Seq(

@@ -87,7 +87,7 @@ val fs2 = crossProject(JSPlatform, JVMPlatform)
   .settings(
     name := "borer-compats-fs2",
     description := "Decoding consecutive entities from a fs2 stream",
-    libraryDependencies ++= Dependencies.borer ++ Dependencies.fs2,
+    libraryDependencies ++= Dependencies.borer.value ++ Dependencies.fs2.value,
     libraryDependencies ++= (Dependencies.fs2Io ++ Dependencies.borerDerive ++ Dependencies.borerScodec)
       .map(_ % Test)
   )
@@ -103,7 +103,7 @@ val http4s = crossProject(JSPlatform, JVMPlatform)
     name := "borer-compats-http4s",
     description := "Provides entity codecs utilising borer",
     libraryDependencies ++=
-      Dependencies.http4s ++ Dependencies.borer,
+      Dependencies.http4s.value ++ Dependencies.borer.value,
     libraryDependencies ++=
       Dependencies.borerDerive.map(_ % Test)
   )
