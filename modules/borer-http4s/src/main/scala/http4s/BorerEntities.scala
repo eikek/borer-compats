@@ -12,27 +12,27 @@ import scodec.bits.ByteVector
 
 object BorerEntities:
 
-  def decodeEntityJson[F[_]: Async, A: Decoder]: EntityDecoder[F, A] =
+  def decodeEntityJson[F[_]: Sync, A: Decoder]: EntityDecoder[F, A] =
     EntityDecoder.decodeBy(MediaType.application.json)(decodeJson)
 
-  def decodeEntityCbor[F[_]: Async, A: Decoder]: EntityDecoder[F, A] =
+  def decodeEntityCbor[F[_]: Sync, A: Decoder]: EntityDecoder[F, A] =
     EntityDecoder.decodeBy(MediaType.application.cbor)(decodeCbor)
 
-  def decodeJson[F[_]: Async, A: Decoder](media: Media[F]): DecodeResult[F, A] =
+  def decodeJson[F[_]: Sync, A: Decoder](media: Media[F]): DecodeResult[F, A] =
     EitherT(readStream(media.body).flatMap { input =>
       for {
-        res <- Async[F].delay(Json.decode(input).to[A].valueEither)
-        txt <- if (res.isLeft) media.bodyText.compile.string else Async[F].pure("")
+        res <- Sync[F].delay(Json.decode(input).to[A].valueEither)
+        txt <- if (res.isLeft) media.bodyText.compile.string else Sync[F].pure("")
       } yield res.left.map(BorerDecodeFailure(txt, _))
     })
 
-  def decodeCbor[F[_]: Async, A: Decoder](media: Media[F]): DecodeResult[F, A] =
+  def decodeCbor[F[_]: Sync, A: Decoder](media: Media[F]): DecodeResult[F, A] =
     EitherT(readStream(media.body).flatMap { input =>
       for {
-        res <- Async[F].delay(Cbor.decode(input).to[A].valueEither)
+        res <- Sync[F].delay(Cbor.decode(input).to[A].valueEither)
         txt <-
           if (res.isLeft) media.body.compile.to(ByteVector).map(_.toHex)
-          else Async[F].pure("")
+          else Sync[F].pure("")
       } yield res.left.map(BorerDecodeFailure(txt, _))
     })
 
