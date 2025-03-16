@@ -4,7 +4,7 @@ import org.portablescala.sbtplatformdeps.PlatformDepsPlugin.autoImport._
 object Dependencies {
   object V {
     val scala3 = "3.3.5"
-    val borer = "1.15.0"
+    val borer = "1.16.0"
     val fs2 = "3.11.0"
     val http4s = "0.23.30"
     val munit = "1.1.0"
