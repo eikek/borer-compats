@@ -5,7 +5,7 @@ object Dependencies {
   object V {
     val scala3 = "3.3.6"
     val borer = "1.16.1"
-    val fs2 = "3.12.0"
+    val fs2 = "3.12.2"
     val http4s = "0.23.30"
     val munit = "1.1.0"
     val munitCatsEffect = "2.1.0"
